@@ -1,6 +1,6 @@
 # Equipment card grid at /equipment with live data
 
-Status: ready-for-agent
+Status: done
 
 ## What to build
 
@@ -28,14 +28,40 @@ CONTEXT.md. Status badge tones live in a shared `ui.ts` constant:
 
 ## Acceptance criteria
 
-- [ ] `/equipment` renders a responsive card grid of real equipment from Supabase via `useQuery` + `runSupabase`.
-- [ ] Each card shows image (with `equipment_type.icon` fallback), status badge with correct tone, name, `type • serial` subtitle, and total hours.
-- [ ] The `/maquinas` nav entry is updated to `/equipment` and marked active there.
-- [ ] All user-facing copy uses Equipo/Equipos, not Máquina.
-- [ ] `Nuevo Equipo` navigates to a `/equipment/new` stub; a card click navigates to an `/equipment/:id` stub.
-- [ ] Status tone map and status labels live in shared constants (`ui.ts`, `labels.ts`), not inline.
-- [ ] No raw error messages surfaced; failures go through the global toast.
+- [x] `/equipment` renders a responsive card grid of real equipment from Supabase via `useQuery` + `runSupabase`.
+- [x] Each card shows image (with icon fallback), status badge with correct tone, name, `type • serial` subtitle, and total hours.
+- [x] The `/maquinas` nav entry is updated to `/equipment` and marked active there.
+- [x] All user-facing copy uses Equipo/Equipos, not Máquina.
+- [x] `Nuevo Equipo` navigates to a `/equipment/new` stub; a card click navigates to an `/equipment/:id` stub.
+- [x] Status tone map and status labels live in shared constants (`ui.ts`, `labels.ts`), not inline.
+- [x] No raw error messages surfaced; failures go through the global toast.
 
 ## Blocked by
 
 None - can start immediately.
+
+## Comments
+
+Implemented. `/equipment` page (`app/equipment/page.tsx`) renders `EquipmentInventory`
+(client) which reads the first `DEFAULT_PAGE_SIZE` (20) rows via `useEquipmentList`
+(`useQuery` + `runSupabase`), joining `equipment_types` (name, icon) and `operators`
+(full_name). Row type is derived with Supabase's `QueryData` so the joins are typed.
+
+Cards: `EquipmentCard` shows the photo (or a generic `Container` glyph when
+`image_url` is null), a status `Badge` (tone from `EQUIPMENT_STATUS_TONE`), name,
+`type • serial` subtitle (mono), and total hours. Whole card links to
+`/equipment/:id`. Constants split per docs/constants.md: status labels in
+`labels.ts`, tone map + paths in `ui.ts`, column labels in `fields.ts`.
+
+Stubs added at `/equipment/new` and `/equipment/[id]`. Nav updated Máquinas→Equipos,
+`/maquinas`→`/equipment`.
+
+Notes / deviations:
+- Icon fallback is a single generic equipment glyph, not a per-type mapping from the
+  `equipment_type.icon` string — the icon-string vocabulary isn't defined yet. Swap in
+  a string→glyph map once that vocabulary exists.
+- The visual "Buscar equipo" field is delivered (functional) in issue 04; not added as
+  a dead visual-only field here.
+
+Verified: `tsc --noEmit` clean, `pnpm lint` clean. Full `next build` run at the end of
+the feature branch.

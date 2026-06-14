@@ -21,7 +21,7 @@ export interface NavItem {
 // ! Calendario is the home/availability view ("/"); the rest 404 until built.
 export const NAV_ITEMS: readonly NavItem[] = [
   { label: "Calendario", href: "/", icon: CalendarDays },
-  { label: "Máquinas", href: "/maquinas", icon: Truck },
+  { label: "Equipos", href: "/equipment", icon: Truck },
   { label: "Mantenimiento", href: "/mantenimiento", icon: Wrench },
   { label: "Clientes", href: "/clientes", icon: Users },
   { label: "Reportes", href: "/reportes", icon: BarChart3 },
