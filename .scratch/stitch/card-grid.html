@@ -1,0 +1,387 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Inventario de Maquinaria - Mindcode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#d7e2ff",
+                        "outline-variant": "#c4c6cf",
+                        "on-surface-variant": "#44474e",
+                        "on-primary-container": "#899ecd",
+                        "on-tertiary-fixed": "#2a1800",
+                        "on-secondary-fixed-variant": "#584400",
+                        "tertiary-container": "#4d2f00",
+                        "surface-container-low": "#f3f4f5",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#241a00",
+                        "surface-container-high": "#e7e8e9",
+                        "on-secondary-container": "#735a00",
+                        "surface-container": "#edeeef",
+                        "on-primary-fixed-variant": "#30466f",
+                        "on-primary-fixed": "#001a40",
+                        "inverse-primary": "#b1c7f7",
+                        "surface": "#f8f9fa",
+                        "primary-fixed-dim": "#b1c7f7",
+                        "on-tertiary-fixed-variant": "#61400f",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2e3132",
+                        "surface-bright": "#f8f9fa",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e1e3e4",
+                        "primary": "#031f47",
+                        "surface-tint": "#495e89",
+                        "tertiary-fixed": "#ffddb6",
+                        "secondary-fixed-dim": "#ebc246",
+                        "on-surface": "#191c1d",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#1e355d",
+                        "secondary": "#745b00",
+                        "surface-dim": "#d9dadb",
+                        "secondary-fixed": "#ffe08b",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#efbe82",
+                        "inverse-on-surface": "#f0f1f2",
+                        "outline": "#74777f",
+                        "background": "#f8f9fa",
+                        "tertiary": "#301c00",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#fdd355",
+                        "on-background": "#191c1d",
+                        "on-tertiary-container": "#c3965e",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e1e3e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Hanken Grotesk"],
+                        "display": ["Hanken Grotesk"],
+                        "body": ["Hanken Grotesk"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body antialiased overflow-hidden flex h-screen">
+<!-- SideNavBar -->
+<nav class="bg-white h-screen w-20 hover:w-64 transition-all duration-300 fixed left-0 top-0 border-r border-slate-200 z-50 flex flex-col group py-4 overflow-hidden shadow-xl">
+<div class="flex items-center justify-center h-16 w-20 mb-8 shrink-0">
+<div class="w-12 h-12 flex items-center justify-center font-bold text-primary"><span style="font-weight: normal;">LogiFleet</span></div>
+</div>
+<ul class="flex-1 flex flex-col gap-2 px-3">
+<li class="relative">
+<a class="flex items-center h-12 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-all overflow-hidden px-3 gap-4 border-l-2 border-transparent" href="#" title="Calendario">
+<span class="material-symbols-outlined shrink-0" data-icon="calendar_today">calendar_today</span>
+<span class="font-label text-xs uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">Calendario</span>
+</a>
+</li>
+<li class="relative">
+<a class="flex items-center h-12 rounded-lg text-primary bg-primary/5 border-l-2 border-primary scale-105 transition-transform overflow-hidden px-3 gap-4" href="#" title="Inventario">
+<span class="material-symbols-outlined shrink-0" data-icon="construction">construction</span>
+<span class="font-label text-xs uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">Inventario</span>
+</a>
+</li>
+<li class="relative">
+<a class="flex items-center h-12 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-all overflow-hidden px-3 gap-4 border-l-2 border-transparent" href="#" title="Mantenimiento">
+<span class="material-symbols-outlined shrink-0" data-icon="build">build</span>
+<span class="font-label text-xs uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">Mantenimiento</span>
+</a>
+</li>
+<li class="relative">
+<a class="flex items-center h-12 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-all overflow-hidden px-3 gap-4 border-l-2 border-transparent" href="#" title="Clientes">
+<span class="material-symbols-outlined shrink-0" data-icon="group">group</span>
+<span class="font-label text-xs uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">Clientes</span>
+</a>
+</li>
+<li class="relative">
+<a class="flex items-center h-12 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-all overflow-hidden px-3 gap-4 border-l-2 border-transparent" href="#" title="Reportes">
+<span class="material-symbols-outlined shrink-0" data-icon="analytics">analytics</span>
+<span class="font-label text-xs uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">Reportes</span>
+</a>
+</li>
+<li class="relative">
+<a class="flex items-center h-12 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-all overflow-hidden px-3 gap-4 border-l-2 border-transparent" href="#" title="Configuración">
+<span class="material-symbols-outlined shrink-0" data-icon="settings">settings</span>
+<span class="font-label text-xs uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">Configuración</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto px-4 pb-4">
+<div class="h-10 w-10 rounded-full bg-primary/5 border border-slate-200 mx-auto flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-primary/60" data-icon="person">person</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 ml-20 flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="bg-white fixed top-0 right-0 left-20 h-16 border-b border-slate-200 z-40 flex justify-between items-center px-6 w-[calc(100%-5rem)] shadow-sm">
+<div class="flex items-center gap-6">
+<h1 class="font-headline text-2xl font-bold text-primary">Inventario de Maquinaria</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<input class="bg-surface-container-low border border-slate-200 rounded-lg pl-10 pr-4 py-2 font-label text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all w-64 placeholder-on-surface-variant/40" placeholder="Buscar máquina..." type="text">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant/40 text-[20px]" data-icon="search">search</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="bg-primary text-white font-bold font-label text-xs tracking-wider px-4 py-2 rounded uppercase hover:bg-primary/90 transition-colors flex items-center gap-2 active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                    Nueva Máquina
+                </button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 mt-16 p-6 overflow-y-auto">
+<!-- Filter Bar -->
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-outline-variant rounded hover:bg-surface-container-low transition-colors text-sm font-semibold">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
+                        Filtros
+                    </button>
+<div class="flex items-center bg-white border border-outline-variant rounded overflow-hidden">
+<button class="px-3 py-2 bg-primary/10 text-primary border-r border-outline-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="grid_view">grid_view</span>
+</button>
+<button class="px-3 py-2 text-on-surface-variant hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[18px]" data-icon="list">list</span>
+</button>
+</div>
+</div>
+<div class="text-sm text-on-surface-variant font-medium">
+                    Mostrando <span class="text-primary font-bold">12</span> máquinas
+                </div>
+</div>
+<!-- Grid of Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="bg-white border border-primary/20 rounded shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="relative h-48 bg-slate-100 flex items-center justify-center">
+<img alt="CAT 320" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBveWzsjT-4i280F250AGEbQvt9KAMMXD4cabZRC5ExIkfTP0iqjPEvASn7I2d__hf856IqkD2HRBOYvU2NhxNKWM-FbuOj1VYsEWfbMSKGspCLJlA2vJN62eyFN_gyGR--5X7mCjsqC_Gzt5xnmL6DL9GYqeCMCUpImof91wz5HJ05aH4Ite3JbnClgZ5p1ykKoEasLwYpfcGKyTjygDNYhBo5QTJfsxJAgYNXBE8BdLgopdF-BZCE1-11kvjhhueNpCFGL-DaPo9J">
+<span class="absolute top-3 right-3 bg-secondary-container text-on-secondary-fixed-variant px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> En obra
+                        </span>
+</div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline font-bold text-lg text-primary">CAT 320</h3>
+<p class="font-label text-[10px] text-on-surface-variant uppercase">Excavadora • EX-01</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="mt-4 pt-4 border-t border-surface-container">
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Horas de uso:</span>
+<span class="font-label font-bold text-primary">1,240 hrs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white border border-primary/20 rounded shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="relative h-48 bg-slate-100 flex items-center justify-center">
+<img alt="JCB 3CX" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtfm2Ixmm0yw2e--8-yQEeUuUtfVY1rTygwv-lSKpcWS1nPb5VUqC6wCeP8StYDEtDWBbltsd7A4jQkyIACFoEQo53qolbAL0QLdITU2t8HGmGIraE2xV3nZRlbP1k2sjmBOzXV5RqSyVwghFlso3KF3465Ugu-1udDGPCxvy7dhKk2JbeUs_0sL-CRAoNQL2JZ9396hne6VFmOpECuul4UdqoD_XrG4VMRzbWTZe-rU5Q9em_0H_NM97BmLytFSLylmjYmqyMFbPT">
+<span class="absolute top-3 right-3 bg-error-container text-on-error-container px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Mantenimiento
+                        </span>
+</div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline font-bold text-lg text-primary">JCB 3CX</h3>
+<p class="font-label text-[10px] text-on-surface-variant uppercase">Retroexcavadora • RB-02</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="mt-4 pt-4 border-t border-surface-container">
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Horas de uso:</span>
+<span class="font-label font-bold text-primary">2,850 hrs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white border border-primary/20 rounded shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="relative h-48 bg-slate-100 flex items-center justify-center">
+<img alt="Liebherr 280 EC-H" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5k4U_OHAMLu6ub5EEzadq-WbVfkafYC-S4WOliHW9G-saEYNRN3ttIXQfeyxOCBsZCfb7BE06ls30ggQnQ0jHLuswLkXNdLNeApDSar9NXJRZKGMffsURLalAxF6-KIQeWWH8ykB6l8sNIz6h3OKuhiIajMVN867evXCAVD5_SDoSVzDA5YLU3mQd5I9c8PUvVJRGpg0d5xP2LpUeVrWt9qhJFxdNs43QYdirCueYbVzP1HOwso_njhvKEVC-eS-UdmxGvz09lrby">
+<span class="absolute top-3 right-3 bg-secondary-container text-on-secondary-fixed-variant px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> En obra
+                        </span>
+</div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline font-bold text-lg text-primary">Liebherr 280</h3>
+<p class="font-label text-[10px] text-on-surface-variant uppercase">Grúa Torre • GT-03</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="mt-4 pt-4 border-t border-surface-container">
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Horas de uso:</span>
+<span class="font-label font-bold text-primary">5,120 hrs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-white border border-primary/20 rounded shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="relative h-48 bg-slate-100 flex items-center justify-center">
+<img alt="Bobcat S450" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiuT7vCQjOiA8wO5rrtgZHLFdUPdbJlW4Bz-8rbmuF8xACIh4zNBoMcs7TDSnzBTpfIh3guUJro3auwJrd2mzkTkZrKOz1Jxn5Qtx_u_SCRbxhxtBkiQuXw9Ias2uQe9c5YkidwLZOLSOrSBEMjMC1wWZ8vOxgwbHhxb62S9cL3h-wp7IvqfIIoCkM1wp_lpVetBQOS7leAiF9XfoLlA8h7OAz9QK9GC0tzL5GPXMWitpb1uY9jLzVAtDSg-yBICS_NrRlRTC1rlNt">
+<span class="absolute top-3 right-3 bg-surface-container-high text-on-surface-variant px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Disponible
+                        </span>
+</div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline font-bold text-lg text-primary">Bobcat S450</h3>
+<p class="font-label text-[10px] text-on-surface-variant uppercase">Minicargador • MC-04</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="mt-4 pt-4 border-t border-surface-container">
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Horas de uso:</span>
+<span class="font-label font-bold text-primary">920 hrs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-white border border-primary/20 rounded shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="relative h-48 bg-slate-100 flex items-center justify-center">
+<img alt="Dynapac CA2500" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByYP-yKAV8po-k7YBBd6B2BEPRQ9dmP1aAOwmgB7SjJJzTLpMO3gBB49ZQakCLDknjgoGWk62jCQzYUCMdAeCy5f2cjwWQl7tg_ePKym_TFPTumJnRxTk6-F1utrVMn-xuod21R6PC_dCbSl1XMklQ3QkUMRPg39xso-Irz7XAbltdVrOoTSLC8iTlx7VvW1ErwfofvfOvbhGy3bkr9jjMQPTOm7dI8jrSIwzGHSsfUb1fFsWsze0U4KjdZYFUgHT_PLpLOImupQlE">
+<span class="absolute top-3 right-3 bg-secondary-container text-on-secondary-fixed-variant px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Reservada
+                        </span>
+</div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline font-bold text-lg text-primary">Dynapac CA2500</h3>
+<p class="font-label text-[10px] text-on-surface-variant uppercase">Compactadora • CP-05</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="mt-4 pt-4 border-t border-surface-container">
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Horas de uso:</span>
+<span class="font-label font-bold text-primary">1,780 hrs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-white border border-primary/20 rounded shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="relative h-48 bg-slate-100 flex items-center justify-center">
+<img alt="Cummins 100kW" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApZDb7zinWeHbFH7Q8rvXT10NSVwNY7SCCsWzJMVgdeaZI7YBFIuUz-hPABxIXSjYt53vev9QyeJQk-RLJBuljn1bTZIV8Qo1DgSbz8p5n_S1CfVlctopxaDF0R3C19sLD0wrs0OpRAR20YvBXEEukacHn-IwgDbsY7fEmcjFYUm6-_a_XxoL9aR4WbG2wL-xP7Frs7jC2aH-g16f6G9bX7YLPlzP62O7QJvK3-w8ja7QFv9cfs953VCyEeD-A0wZr0NrULLjIL7Hd">
+<span class="absolute top-3 right-3 bg-error-container text-on-error-container px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Fuera de Servicio
+                        </span>
+</div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline font-bold text-lg text-primary">Cummins 100kW</h3>
+<p class="font-label text-[10px] text-on-surface-variant uppercase">Generador • GN-06</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="mt-4 pt-4 border-t border-surface-container">
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Horas de uso:</span>
+<span class="font-label font-bold text-primary">4,300 hrs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 7 -->
+<div class="bg-white border border-primary/20 rounded shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="relative h-48 bg-slate-100 flex items-center justify-center">
+<img alt="CAT D6" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2Jn5gXOGFrKAztsI3l7lFTdj5iTx7g-3oYksQsjiEWpCNgkJEkBPqk9yHpw4ovPPMGc46Bc5seUASsGM79mcH88pL1_fCpBMkFJOat5EtG_YYc18UzzUwwKxwyma13sOkd4FhqEISjry6SdPmiIj0lpKievX_CFa6onN0cBmd4Q32TiFTsO0Elc7Cr6J-RqU8ka-pr3yoDalOYdGXbhac1XuIp3uuwd8tUGYIH9NVur9iwuH91omyP0Nj5W9_8rQxdwQBdufRna8v">
+<span class="absolute top-3 right-3 bg-surface-container-high text-on-surface-variant px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Disponible
+                        </span>
+</div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline font-bold text-lg text-primary">CAT D6</h3>
+<p class="font-label text-[10px] text-on-surface-variant uppercase">Bulldozer • BD-07</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="mt-4 pt-4 border-t border-surface-container">
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Horas de uso:</span>
+<span class="font-label font-bold text-primary">3,100 hrs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 8 -->
+<div class="bg-white border border-primary/20 rounded shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="relative h-48 bg-slate-100 flex items-center justify-center">
+<img alt="John Deere 310" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNVwrew9fKYGEt3Aejs5AYFZHlKooP1v94CNQGWVWzCeu8rjFZESmixr_2HTJJPUI1q0tTSz81eOVXs_kaX93cZ-dYBOfBhVjhV9Uj1Jp1mF9Bev4dJ2xl8U-ORkCaQwhbySVJVA1UJQ_8yK8kC8SVS59ix2d3KWXM4ML38AC1mxEPd3JYtULK4xeT4-fI-Htv_Q0CVZSw139JocifAyLjhyMiE5F1H56HkjrKTpvfXtIbYkExrbL-qGayJYmlNiomKt-eUlvzlelg">
+<span class="absolute top-3 right-3 bg-secondary-container text-on-secondary-fixed-variant px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> En obra
+                        </span>
+</div>
+<div class="p-4 flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline font-bold text-lg text-primary">John Deere 310</h3>
+<p class="font-label text-[10px] text-on-surface-variant uppercase">Retroexcavadora • RB-08</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="mt-4 pt-4 border-t border-surface-container">
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Horas de uso:</span>
+<span class="font-label font-bold text-primary">1,450 hrs</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+
+</body></html>

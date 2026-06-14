@@ -144,7 +144,7 @@ The rhythm is based on an **8px grid**.
 - **Tablet:** 8-column grid, 16px gutters, 24px side margins.
 - **Mobile:** 4-column grid, 16px gutters, 16px side margins.
 
-Content is organized into logical "zones." Primary navigation is always docked to the left in a high-contrast Navy sidebar, while the main utility area occupies a light-neutral workspace.
+Content is organized into logical "zones." Primary navigation is always docked to the left in a white sidebar rail with navy-tinted iconography; the active item is marked by a 2px Navy left border and a faint Navy tint. The main utility area occupies a light-neutral workspace.
 
 ## Elevation & Depth
 

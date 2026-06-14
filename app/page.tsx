@@ -1,3 +1,6 @@
+import { Plus } from "lucide-react"
+
+import { AppShell } from "@/core/components/layout"
 import {
   Badge,
   Button,
@@ -8,7 +11,7 @@ import {
   CardTitle,
 } from "@/core/components/ui"
 
-import { VehicleFormDemo } from "./components/vehicle-form-demo"
+import { EquipmentFormDemo } from "./components/equipment-form-demo"
 
 function Section({
   title,
@@ -29,17 +32,21 @@ function Section({
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col bg-surface">
-      {/* Navy-on-white lockup with a mustard accent bar (DESIGN.md). */}
-      <header className="border-b-2 border-brand-mustard bg-surface-container-lowest">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-8">
-          {/* eslint-disable-next-line @next/next/no-img-element -- brand wordmark SVG, no optimization needed */}
-          <img alt="logiFleet" className="h-9 w-auto" src="/logo.svg" />
-          <Badge variant="warning">Design System</Badge>
-        </div>
-      </header>
-
-      <main className="mx-auto flex w-full max-w-7xl flex-col gap-14 px-4 py-12 sm:px-8">
+    <AppShell
+      actions={
+        <Button variant="secondary">
+          <Plus aria-hidden className="size-4" />
+          Nueva reserva
+        </Button>
+      }
+      subtitle={
+        <span className="border-b-2 border-brand-navy pb-1 font-mono text-label-md uppercase text-brand-navy">
+          Mes
+        </span>
+      }
+      title="Disponibilidad de Flota"
+    >
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-14">
         <div className="flex flex-col gap-3">
           <h1 className="text-display text-brand-navy">Industrial Precision</h1>
           <p className="max-w-2xl text-body-lg text-on-surface-variant">
@@ -124,18 +131,18 @@ export default function Home() {
         <Section title="Form (useForm + yup)">
           <Card className="max-w-3xl">
             <CardHeader>
-              <CardTitle>Add vehicle</CardTitle>
+              <CardTitle>Add equipment</CardTitle>
               <CardDescription>
                 Text fields validate on blur; the status select validates on
                 commit. See docs/forms.md.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <VehicleFormDemo />
+              <EquipmentFormDemo />
             </CardContent>
           </Card>
         </Section>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   )
 }

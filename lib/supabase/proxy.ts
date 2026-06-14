@@ -1,6 +1,8 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { isRouteAllowed } from '@/core/auth/route-guards'
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -38,20 +40,25 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims()
   const user = data?.claims
 
-  // NOTE: Auth gating is disabled until login/auth pages exist. Once you add an
-  // `/auth/login` route, uncomment the block below to redirect unauthenticated
-  // users. (Leaving it enabled now would redirect every page to a missing route.)
-  //
-  // if (
-  //   !user &&
-  //   !request.nextUrl.pathname.startsWith('/login') &&
-  //   !request.nextUrl.pathname.startsWith('/auth')
-  // ) {
-  //   const url = request.nextUrl.clone()
-  //   url.pathname = '/auth/login'
-  //   return NextResponse.redirect(url)
-  // }
-  void user
+  const pathname = request.nextUrl.pathname
+  const isAuthRoute = pathname.startsWith('/auth')
+
+  // Auth gate: an unauthenticated caller may only reach the auth routes.
+  if (!user && !isAuthRoute) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/auth/login'
+    return NextResponse.redirect(url)
+  }
+
+  // Role gate: inert until ROUTE_ROLES has entries (see core/auth/route-guards).
+  // Fails closed on a missing user_role claim — e.g. before the access-token
+  // hook is enabled — so opting a route in is safe by default.
+  const role = (user as { user_role?: unknown } | undefined)?.user_role
+  if (user && !isAuthRoute && !isRouteAllowed(pathname, role)) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/'
+    return NextResponse.redirect(url)
+  }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
   // If you're creating a new response object with NextResponse.next() make sure to:

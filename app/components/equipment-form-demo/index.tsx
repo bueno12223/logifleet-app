@@ -13,28 +13,29 @@ import {
 } from "@/core/components/ui"
 
 import {
-  vehicleInitialValues,
-  vehicleSchema,
-  type VehicleFormValues,
-  type VehicleStatus,
+  equipmentInitialValues,
+  equipmentSchema,
+  type EquipmentFormValues,
+  type EquipmentFormStatus,
 } from "./validations"
 
 // Option list for a single form — declared at file scope, not inside the component (docs/constants.md).
 // `satisfies` keeps the values honest against the status union without a label map.
 const STATUS_OPTIONS = [
+  { value: "in_use", label: "In use" },
+  { value: "available", label: "Available" },
   { value: "in_transit", label: "In transit" },
-  { value: "idle", label: "Idle" },
   { value: "maintenance", label: "Maintenance" },
-  { value: "out_of_service", label: "Out of service" },
-] as const satisfies readonly { value: VehicleStatus; label: string }[]
+  { value: "retired", label: "Retired" },
+] as const satisfies readonly { value: EquipmentFormStatus; label: string }[]
 
-export function VehicleFormDemo() {
-  const [saved, setSaved] = useState<VehicleFormValues | null>(null)
+export function EquipmentFormDemo() {
+  const [saved, setSaved] = useState<EquipmentFormValues | null>(null)
 
   const { Form, getFieldProps, isSubmitting, resetForm } =
-    useForm<VehicleFormValues>({
-      initialValues: vehicleInitialValues,
-      schema: vehicleSchema,
+    useForm<EquipmentFormValues>({
+      initialValues: equipmentInitialValues,
+      schema: equipmentSchema,
       onSubmit: (values) => setSaved(values),
     })
 
@@ -42,16 +43,16 @@ export function VehicleFormDemo() {
     <Form className="flex flex-col gap-5">
       <div className="grid gap-5 sm:grid-cols-2">
         {/* Keystroke field — validates on blur. */}
-        <FormField required label="VIN">
+        <FormField required label="Serial number">
           <Input
             autoComplete="off"
-            placeholder="1HGCM82633A004352"
-            {...getFieldProps("vin")}
+            placeholder="SN-0421-XR"
+            {...getFieldProps("serialNumber")}
           />
         </FormField>
 
-        <FormField required label="Plate">
-          <Input autoComplete="off" placeholder="ABC-1234" {...getFieldProps("plate")} />
+        <FormField label="License plate">
+          <Input autoComplete="off" placeholder="ABC-1234" {...getFieldProps("licensePlate")} />
         </FormField>
 
         {/* Commit field — validates immediately via onValueChange. */}
@@ -70,7 +71,7 @@ export function VehicleFormDemo() {
 
       <div className="flex items-center gap-3">
         <Button disabled={isSubmitting} type="submit">
-          Save vehicle
+          Save equipment
         </Button>
         <Button
           type="button"

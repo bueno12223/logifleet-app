@@ -28,7 +28,7 @@ export interface BadgeProps
     VariantProps<typeof badgeVariants> {}
 
 /**
- * Pill-shaped status chip in JetBrains Mono. Use for vehicle/asset state.
+ * Pill-shaped status chip in JetBrains Mono. Use for equipment/asset state.
  *
  * @example
  * <Badge variant="success">In transit</Badge>
