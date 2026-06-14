@@ -1,8 +1,3 @@
-// ! Hand-edited: the clients / sites / equipment_schedule tables and the
-// ! schedule_kind / schedule_status enums were added by hand because `pnpm db:types`
-// ! could not run in this environment (no Docker for a local stack, no
-// ! SUPABASE_ACCESS_TOKEN for the remote project). Regenerate with `pnpm db:types`
-// ! once DB access is available and replace this whole file with the output.
 export type Json =
   | string
   | number
