@@ -8,6 +8,11 @@
 -- with a range-overlap test; btree_gist teaches GiST to index the equality side.
 create extension if not exists btree_gist with schema extensions;
 
+-- btree_gist lives in the extensions schema; put it on the search_path so the GiST
+-- exclusion constraint below can resolve the equality operator class in any environment
+-- (Supabase configures this by default; a bare Postgres may not).
+set search_path = public, extensions;
+
 -- The kind of commitment an Equipment schedule represents. Closed set; a new kind
 -- is a new enum value, never a new table (see docs/adr/0003).
 create type public.schedule_kind as enum (
@@ -78,6 +83,7 @@ create table public.equipment_schedule (
         site_id is null
         and origin_site_id is not null
         and destination_site_id is not null
+        and origin_site_id <> destination_site_id
       when 'maintenance' then
         site_id is null
         and origin_site_id is null

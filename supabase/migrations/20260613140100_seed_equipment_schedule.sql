@@ -31,7 +31,6 @@ declare
   equipment_camion_id uuid;
   equipment_cargador_id uuid;
   equipment_montacargas_id uuid;
-  equipment_grua_id uuid;
 begin
   if exists (select 1 from public.clients where name = 'Constructora Andes') then
     return;
@@ -78,8 +77,7 @@ begin
     (type_forklift_id, 'Montacargas Toyota', 'Toyota 8FG', 'FRK-8FG-0004', null, 'maintenance')
     returning id into equipment_montacargas_id;
   insert into public.equipment (equipment_type_id, name, model, serial_number, license_plate, status) values
-    (type_crane_id, 'Grua Liebherr LTM', 'Liebherr LTM 1090', 'CRN-LTM-0005', 'LF-5678', 'available')
-    returning id into equipment_grua_id;
+    (type_crane_id, 'Grua Liebherr LTM', 'Liebherr LTM 1090', 'CRN-LTM-0005', 'LF-5678', 'available');
 
   -- Excavadora: a finished work span, a touching transit, the active work span
   -- running today (En obra), an available gap, then maintenance. The half-open
@@ -112,5 +110,4 @@ begin
     (equipment_montacargas_id, 'maintenance', 'active', '2026-06-08 08:00:00+00', '2026-06-15 18:00:00+00');
 
   -- Grua: no schedules at all -> reads as Disponible for the whole month.
-  perform equipment_grua_id;
 end $$;
