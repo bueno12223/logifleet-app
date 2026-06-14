@@ -1,3 +1,8 @@
+// ! Hand-edited: the clients / sites / equipment_schedule tables and the
+// ! schedule_kind / schedule_status enums were added by hand because `pnpm db:types`
+// ! could not run in this environment (no Docker for a local stack, no
+// ! SUPABASE_ACCESS_TOKEN for the remote project). Regenerate with `pnpm db:types`
+// ! once DB access is available and replace this whole file with the output.
 export type Json =
   | string
   | number
@@ -39,6 +44,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      clients: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       equipment: {
         Row: {
           created_at: string
@@ -104,6 +130,80 @@ export type Database = {
             columns: ["equipment_type_id"]
             isOneToOne: false
             referencedRelation: "equipment_types"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_schedule: {
+        Row: {
+          created_at: string
+          destination_site_id: string | null
+          ends_at: string
+          equipment_id: string
+          id: string
+          kind: Database["public"]["Enums"]["schedule_kind"]
+          notes: string | null
+          origin_site_id: string | null
+          site_id: string | null
+          starts_at: string
+          status: Database["public"]["Enums"]["schedule_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          destination_site_id?: string | null
+          ends_at: string
+          equipment_id: string
+          id?: string
+          kind: Database["public"]["Enums"]["schedule_kind"]
+          notes?: string | null
+          origin_site_id?: string | null
+          site_id?: string | null
+          starts_at: string
+          status?: Database["public"]["Enums"]["schedule_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          destination_site_id?: string | null
+          ends_at?: string
+          equipment_id?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["schedule_kind"]
+          notes?: string | null
+          origin_site_id?: string | null
+          site_id?: string | null
+          starts_at?: string
+          status?: Database["public"]["Enums"]["schedule_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_schedule_destination_site_id_fkey"
+            columns: ["destination_site_id"]
+            isOneToOne: false
+            referencedRelation: "sites"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "equipment_schedule_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "equipment_schedule_origin_site_id_fkey"
+            columns: ["origin_site_id"]
+            isOneToOne: false
+            referencedRelation: "sites"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "equipment_schedule_site_id_fkey"
+            columns: ["site_id"]
+            isOneToOne: false
+            referencedRelation: "sites"
             referencedColumns: ["id"]
           },
         ]
@@ -180,6 +280,41 @@ export type Database = {
         }
         Relationships: []
       }
+      sites: {
+        Row: {
+          address: string | null
+          client_id: string | null
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sites_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -195,6 +330,8 @@ export type Database = {
         | "in_transit"
         | "maintenance"
         | "retired"
+      schedule_kind: "work" | "transit" | "maintenance"
+      schedule_status: "active" | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -333,6 +470,8 @@ export const Constants = {
         "maintenance",
         "retired",
       ],
+      schedule_kind: ["work", "transit", "maintenance"],
+      schedule_status: ["active", "cancelled"],
     },
   },
 } as const
