@@ -1,6 +1,8 @@
 import type { BadgeProps } from "@/core/components/ui"
 import type { Database } from "@/lib/supabase/database.types"
 
+import type { ViewMode } from "../types"
+
 type EquipmentStatus = Database["public"]["Enums"]["equipment_status"]
 type BadgeVariant = NonNullable<BadgeProps["variant"]>
 
@@ -16,6 +18,9 @@ export const EQUIPMENT_STATUS_TONE: Record<EquipmentStatus, BadgeVariant> = {
 
 export const EQUIPMENT_LIST_PATH = "/equipment"
 export const EQUIPMENT_NEW_PATH = "/equipment/new"
+
+// Landing view when there's no prior state (issue 03 store seed).
+export const DEFAULT_VIEW: ViewMode = "grid"
 
 export const equipmentDetailPath = (id: string) => `/equipment/${id}`
 

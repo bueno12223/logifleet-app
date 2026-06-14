@@ -9,14 +9,11 @@ import {
   equipmentDetailPath,
   equipmentStatusLabels,
 } from "../constants"
+import { formatHours } from "../format"
 import type { EquipmentListItem } from "../queries"
 
 interface EquipmentCardProps {
   equipment: EquipmentListItem
-}
-
-function formatHours(hours: number) {
-  return hours.toLocaleString("es-ES")
 }
 
 /**
