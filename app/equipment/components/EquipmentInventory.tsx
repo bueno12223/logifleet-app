@@ -6,13 +6,16 @@ import { LIST_PAGE_SIZE_OPTIONS } from "../constants"
 import { useEquipmentList } from "../queries"
 import { useEquipmentListStore } from "../store"
 import { EquipmentCardGrid } from "./EquipmentCardGrid"
+import { EquipmentEmptyState } from "./EquipmentEmptyState"
 import { EquipmentFilters } from "./EquipmentFilters"
+import { EquipmentListSkeleton } from "./EquipmentListSkeleton"
 import { EquipmentTable } from "./EquipmentTable"
 
 /**
- * Client orchestrator for the equipment inventory. Renders the filter bar, the
- * active view (card grid or data table) over the current page, and the pagination
- * controls. Richer loading/empty states arrive in issue 06.
+ * Client orchestrator for the equipment inventory. Renders the filter bar, then the
+ * active view (card grid or data table) over the current page, plus pagination.
+ * Loading shows view-matching skeletons; an empty result shows a tailored empty
+ * state; fetch errors surface via the global toast (QueryClient onError).
  */
 export function EquipmentInventory() {
   const view = useEquipmentListStore((state) => state.view)
@@ -21,7 +24,7 @@ export function EquipmentInventory() {
   const setPage = useEquipmentListStore((state) => state.setPage)
   const setPageSize = useEquipmentListStore((state) => state.setPageSize)
 
-  const { data, isPending } = useEquipmentList()
+  const { data, isPending, isError } = useEquipmentList()
   const items = data?.items ?? []
   const total = data?.total
 
@@ -30,7 +33,11 @@ export function EquipmentInventory() {
       <EquipmentFilters count={total} />
 
       {isPending ? (
-        <p className="text-body-sm text-on-surface-variant">Cargando equipos…</p>
+        <EquipmentListSkeleton view={view} />
+      ) : isError ? (
+        <p className="rounded-lg border border-card-border bg-surface-container-lowest px-6 py-16 text-center text-body-md text-on-surface-variant">
+          No se pudieron cargar los equipos.
+        </p>
       ) : items.length > 0 ? (
         view === "grid" ? (
           <EquipmentCardGrid equipment={items} />
@@ -38,9 +45,7 @@ export function EquipmentInventory() {
           <EquipmentTable equipment={items} />
         )
       ) : (
-        <p className="text-body-sm text-on-surface-variant">
-          No hay equipos para mostrar.
-        </p>
+        <EquipmentEmptyState />
       )}
 
       {total != null && total > 0 ? (
