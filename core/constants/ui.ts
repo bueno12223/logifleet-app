@@ -18,6 +18,10 @@ export interface NavItem {
   icon: LucideIcon
 }
 
+// Delay before a search input commits its value to a query, so typing doesn't
+// fire a request per keystroke.
+export const SEARCH_DEBOUNCE_MS = 300
+
 // ! Calendario is the home/availability view ("/"); the rest 404 until built.
 export const NAV_ITEMS: readonly NavItem[] = [
   { label: "Calendario", href: "/", icon: CalendarDays },

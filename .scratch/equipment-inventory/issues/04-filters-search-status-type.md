@@ -1,6 +1,6 @@
 # Filters: search + status + type multi-select
 
-Status: ready-for-agent
+Status: done
 
 ## What to build
 
@@ -24,13 +24,32 @@ New UI-kit component: a reusable `MultiSelect` (Radix Popover + checkbox list, a
 
 ## Acceptance criteria
 
-- [ ] A `MultiSelect` component exists in `@/core/components/ui`, built on Radix, styled per DESIGN.md.
-- [ ] Search filters `name`/`serial_number`/`model` server-side, debounced 300ms via `SEARCH_DEBOUNCE_MS`.
-- [ ] Status and Type multi-selects filter server-side via `.in`; Type options load from `equipment_types`.
-- [ ] All filter state lives in the Zustand store and is reflected in the query key; both views honor it.
-- [ ] A result count reflects the active filters.
-- [ ] Status/field labels come from shared `labels.ts`/`fields.ts`, not inline.
+- [x] A `MultiSelect` component exists in `@/core/components/ui`, built on Radix, styled per DESIGN.md.
+- [x] Search filters `name`/`serial_number`/`model` server-side, debounced 300ms via `SEARCH_DEBOUNCE_MS`.
+- [x] Status and Type multi-selects filter server-side via `.in`; Type options load from `equipment_types`.
+- [x] All filter state lives in the Zustand store and is reflected in the query key; both views honor it.
+- [x] A result count reflects the active filters.
+- [x] Status/field labels come from shared `labels.ts`/`fields.ts`, not inline.
 
 ## Blocked by
 
 - Issue 03 (data table view + grid/list toggle + Zustand list store)
+
+## Comments
+
+Implemented. `MultiSelect` added to the UI kit on `@radix-ui/react-popover`: a
+"Label (N)" trigger, a checkbox-style option list, and a Limpiar (clear) action.
+
+`EquipmentFilters` is an inline bar with debounced search (local input state →
+`setSearch` after `SEARCH_DEBOUNCE_MS`, applied as a PostgREST `or()` of
+`name/serial_number/model ilike`, with the term sanitized so a comma can't break the
+filter), a Status `MultiSelect` (enum values via `Constants` + `equipmentStatusLabels`),
+and a Type `MultiSelect` (options from `useEquipmentTypes`). The bar also hosts the
+result count and the view toggle.
+
+All filter state lives in `useEquipmentListStore`; `useEquipmentList` reads it, applies
+`.or`/`.in` server-side, and includes `{ search, statuses, typeIds }` in the query key
+so each filter combination caches independently. Both views render the same filtered
+list. Added a `clearFilters` action for the issue-06 "no results" state.
+
+Verified: `tsc --noEmit` clean, `pnpm lint` clean.
